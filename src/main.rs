@@ -1,23 +1,16 @@
-use serde::{Deserialize, Serialize};
+mod pivotal_tracker;
+
 use std::env;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-  let client = reqwest::Client::new();
-  let res = client
-    .get("https://www.pivotaltracker.com/services/v5/me")
-    .header("X-TrackerToken", &env::var("PIVOTAL_TRACKER_API_KEY")?)
-    .send()
-    .await?;
-  let body = res.json::<Me>().await?;
+  let client = pivotal_tracker::Client::new(pivotal_tracker::ClientNewOptions {
+    api_key: env::var("PIVOTAL_TRACKER_API_KEY")?,
+    api_version: 5,
+  });
+  let me = client.get_me().await?;
 
-  println!("{:?}", body);
+  println!("{:?}", me);
 
   Ok(())
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Me {
-  email: String,
-  name: String,
 }
