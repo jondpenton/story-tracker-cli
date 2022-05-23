@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+// TODO: Verify file structure is correct.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct TimeZone {
   // The type of this object: time_zone. This field is read only.

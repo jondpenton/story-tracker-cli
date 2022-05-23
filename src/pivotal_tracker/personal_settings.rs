@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+// TODO: Verify file structure is correct.
 #[derive(Serialize, Deserialize, Debug)]
 pub enum HeaderDisplayMode {
   Collapsed,
