@@ -1,22 +1,29 @@
+use super::{Client, Person, RequestError, TimeZone};
 use serde::{Deserialize, Serialize};
 
-use super::Client;
+impl Client {
+  pub async fn get_me(&self) -> Result<Me, RequestError> {
+    self
+      .request::<Me, _>(|client, base_url| {
+        client.get(format!("{}/me", base_url))
+      })
+      .await
+  }
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Me {
-  email: String,
-  name: String,
-}
+  #[serde(flatten)]
+  person: Person,
 
-impl Client {
-  pub async fn get_me(self) -> reqwest::Result<Me> {
-    let client = reqwest::Client::new();
-    let res = client
-      .get("https://www.pivotaltracker.com/services/v5/me")
-      .header("X-TrackerToken", &self.api_key)
-      .send()
-      .await?;
-
-    res.json::<Me>().await
-  }
+  // account_ids: Vec<u64>,
+  api_token: String,
+  created_at: String,
+  has_google_identity: bool,
+  // personal_settings: PersonalSettings,
+  // project_ids: Vec<u64>,
+  receives_in_app_notifications: bool,
+  time_zone: TimeZone,
+  updated_at: String,
+  // workspace_ids: Vec<u64>,
 }
