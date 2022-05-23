@@ -22,10 +22,8 @@ pub struct Me {
   api_token: String,
   created_at: String,
   has_google_identity: bool,
-  // personal_settings: PersonalSettings,
   pub projects: Vec<MembershipSummary>,
   receives_in_app_notifications: bool,
   time_zone: TimeZone,
   updated_at: String,
-  // workspace_ids: Vec<u64>,
 }
