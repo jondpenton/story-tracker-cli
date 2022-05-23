@@ -1,24 +1,44 @@
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 use super::ProjectID;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MembershipSummary {
-  pub favorite: bool,
+  /// Whether or not the project is one of the member's favorites.
+  #[serde(rename = "favorite")]
+  pub is_favorite: bool,
+
+  /// This field is read only.
   pub kind: String,
+
+  /// This field is read only.
   pub id: MembershipSummaryID,
-  pub last_viewed_at: String,
+
+  /// The last (approximate) time at which the authenticated user accessed
+  /// the project.
+  pub last_viewed_at: DateTime<Utc>,
+
+  /// The color of the project on the member's views.
   pub project_color: String,
   pub project_id: ProjectID,
   pub project_name: String,
+
+  /// The relationship between the authenticated user making the request and
+  /// the project.
   pub role: MembershipSummaryRole,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MembershipSummaryID(u64);
 
+/// The relationship between the authenticated user making the request and
+/// the project.
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum MembershipSummaryRole {
-  #[serde(rename = "owner")]
+  Inactive,
+  Member,
   Owner,
+  Viewer,
 }
