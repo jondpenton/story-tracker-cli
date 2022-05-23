@@ -1,4 +1,6 @@
-use super::{Account, Client, Person, RequestError, TimeZone};
+use super::{
+  Account, Client, MembershipSummary, Person, RequestError, TimeZone,
+};
 use serde::{Deserialize, Serialize};
 
 impl Client {
@@ -21,7 +23,7 @@ pub struct Me {
   created_at: String,
   has_google_identity: bool,
   // personal_settings: PersonalSettings,
-  // project_ids: Vec<u64>,
+  pub projects: Vec<MembershipSummary>,
   receives_in_app_notifications: bool,
   time_zone: TimeZone,
   updated_at: String,
