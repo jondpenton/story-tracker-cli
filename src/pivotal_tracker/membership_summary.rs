@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use super::ProjectID;
 
+/// [Pivotal Tracker API](https://www.pivotaltracker.com/help/api/rest/v5#membership_summary_resource)
 #[derive(Debug, Serialize, Deserialize)]
 pub struct MembershipSummary {
   /// Whether or not the project is one of the member's favorites.

@@ -39,8 +39,6 @@ pub struct Me {
   ///
   /// This field is read only.
   pub has_google_identity: bool,
-
-  /// Settings for the authenticated user.
   pub personal_settings: Option<PersonalSettings>,
 
   /// This field is read only.
