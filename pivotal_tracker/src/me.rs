@@ -1,9 +1,16 @@
-use super::{
-  Account, AccountID, Client, MembershipSummary, Person, PersonalSettings,
-  ProjectID, RequestError, TimeZone, WorkspaceID,
-};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+
+use crate::{
+  account::{Account, AccountID},
+  client::{Client, RequestError},
+  membership_summary::MembershipSummary,
+  person::Person,
+  personal_settings::PersonalSettings,
+  project::ProjectID,
+  time_zone::TimeZone,
+  workspace::WorkspaceID,
+};
 
 impl Client {
   pub async fn get_me(&self) -> Result<Me, RequestError> {

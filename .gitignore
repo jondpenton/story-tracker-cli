@@ -1,5 +1,8 @@
-# Rust output
-/target
-
 # Environment variables
-.envrc
+**/.envrc
+
+# Mac
+.DS_Store
+
+# Rust output
+target/

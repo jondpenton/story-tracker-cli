@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-use super::ProjectID;
+use crate::project::ProjectID;
 
 /// [Pivotal Tracker API](https://www.pivotaltracker.com/help/api/rest/v5#account_resource)
 #[derive(Serialize, Deserialize, Debug)]
