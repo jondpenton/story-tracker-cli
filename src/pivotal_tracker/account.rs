@@ -1,3 +1,4 @@
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 use super::ProjectID;
@@ -5,7 +6,7 @@ use super::ProjectID;
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Account {
   /// Creation time. This field is read only.
-  pub created_at: Option<String>,
+  pub created_at: Option<DateTime<Utc>>,
 
   /// The number of days remaining in the account's Free Trial period, or 0 if
   /// it has expired. This field is read only.
@@ -38,7 +39,7 @@ pub struct Account {
   pub status: AccountStatus,
 
   /// Time of last update. This field is read only.
-  pub updated_at: Option<String>,
+  pub updated_at: Option<DateTime<Utc>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

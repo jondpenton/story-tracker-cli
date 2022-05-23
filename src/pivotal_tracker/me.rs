@@ -1,6 +1,7 @@
 use super::{
   Account, Client, MembershipSummary, Person, RequestError, TimeZone,
 };
+use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 impl Client {
@@ -20,10 +21,10 @@ pub struct Me {
 
   pub accounts: Vec<Account>,
   pub api_token: String,
-  pub created_at: String,
+  pub created_at: DateTime<Utc>,
   pub has_google_identity: bool,
   pub projects: Vec<MembershipSummary>,
   pub receives_in_app_notifications: bool,
   pub time_zone: TimeZone,
-  pub updated_at: String,
+  pub updated_at: DateTime<Utc>,
 }
