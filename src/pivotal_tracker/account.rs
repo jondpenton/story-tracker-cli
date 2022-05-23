@@ -2,11 +2,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Account {
-  kind: String,
-  id: AccountID,
-  name: String,
-  plan: AccountPlan,
-  status: AccountStatus,
+  pub kind: String,
+  pub id: AccountID,
+  pub name: String,
+  pub plan: AccountPlan,
+  pub status: AccountStatus,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
