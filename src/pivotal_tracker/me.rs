@@ -1,4 +1,4 @@
-use super::{Client, Person, RequestError, TimeZone};
+use super::{Account, Client, Person, RequestError, TimeZone};
 use serde::{Deserialize, Serialize};
 
 impl Client {
@@ -16,7 +16,7 @@ pub struct Me {
   #[serde(flatten)]
   person: Person,
 
-  // account_ids: Vec<u64>,
+  accounts: Vec<Account>,
   api_token: String,
   created_at: String,
   has_google_identity: bool,

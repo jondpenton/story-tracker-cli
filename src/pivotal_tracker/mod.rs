@@ -1,3 +1,6 @@
+mod account;
+pub use account::*;
+
 mod client;
 pub use client::*;
 
