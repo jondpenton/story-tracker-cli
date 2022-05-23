@@ -21,3 +21,6 @@ pub use project::*;
 
 mod time_zone;
 pub use time_zone::*;
+
+mod workspace;
+pub use workspace::*;

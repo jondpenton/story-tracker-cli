@@ -11,7 +11,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
   let me = client.get_me().await?;
 
-  println!("{:?}", me.person);
+  println!("{:?}", me.projects);
 
   Ok(())
 }
