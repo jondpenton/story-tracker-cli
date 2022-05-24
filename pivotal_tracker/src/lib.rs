@@ -3,6 +3,7 @@ pub mod blocker;
 pub mod branch;
 pub mod client;
 pub mod comment;
+pub mod counts_by_story_state;
 pub mod cycle_time_details;
 pub mod integration;
 pub mod label;
