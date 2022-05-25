@@ -84,7 +84,7 @@ pub struct Story {
   pub deadline_at: Option<DateTime<Utc>>,
 
   /// In-depth explanation of the story requirements.
-  pub description: String,
+  pub description: Option<String>,
 
   /// Point value of the story.
   pub estimate: f32,
