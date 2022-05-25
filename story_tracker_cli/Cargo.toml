@@ -7,4 +7,7 @@ edition = "2021"
 
 [dependencies]
 pivotal_tracker = { version = "*", path = "../pivotal_tracker" }
+serde = "1.0.89"
+serde_json = "1.0.81"
+slug = "0.1.4"
 tokio = { version = "1.18.2", features = ["full"] }

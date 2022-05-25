@@ -171,3 +171,9 @@ pub enum StoryType {
   Feature,
   Release,
 }
+
+impl From<StoryType> for String {
+  fn from(state: StoryType) -> Self {
+    format!("{:?}", state).to_lowercase()
+  }
+}
