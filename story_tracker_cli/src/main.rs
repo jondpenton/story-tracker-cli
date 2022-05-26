@@ -18,7 +18,7 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     })
     .await?;
 
-  println!("{}", branch_name(&story));
+  println!("{:#?}", branch_name(&story));
 
   Ok(())
 }
