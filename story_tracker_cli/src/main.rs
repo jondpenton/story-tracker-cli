@@ -14,7 +14,7 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
   });
   let story = client
     .get_story(GetStoryOptions {
-      id: StoryID(181978572),
+      id: StoryID(182298326),
     })
     .await?;
 

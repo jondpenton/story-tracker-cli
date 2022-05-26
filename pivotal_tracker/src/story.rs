@@ -87,7 +87,7 @@ pub struct Story {
   pub description: Option<String>,
 
   /// Point value of the story.
-  pub estimate: f32,
+  pub estimate: Option<f32>,
   pub follower_ids: Option<Vec<PersonID>>,
 
   /// This field is read only.
