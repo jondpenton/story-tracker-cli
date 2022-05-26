@@ -2,9 +2,9 @@ use std::{env, error};
 
 use pivotal_tracker::{
   client::{Client, ClientNewOptions},
-  story::{GetStoryOptions, Story, StoryID},
+  story::{GetStoryOptions, StoryID},
 };
-use slug::slugify;
+use story_tracker_cli::generate::branch_name;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn error::Error>> {
@@ -18,42 +18,7 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     })
     .await?;
 
-  println!("{}", generate_branch_name(&story));
+  println!("{}", branch_name(&story));
 
   Ok(())
-}
-
-fn generate_branch_name(story: &Story) -> String {
-  let story_name_slug = slugify(story.name.trim());
-  let mut story_name_words = story_name_slug.split("-").collect::<Vec<&str>>();
-  let mut branch_name_parts = vec![
-    format!(
-      "{}/{}",
-      String::from(story.story_type),
-      story_name_words.remove(0)
-    ),
-    format!("#{}", story.id.0),
-  ];
-
-  loop {
-    if story_name_words.len() == 0 {
-      break;
-    }
-
-    let branch_length =
-      branch_name_parts.iter().fold(0, |acc, x| acc + x.len())
-        + branch_name_parts.len()
-        - 1;
-
-    if branch_length + story_name_words[0].len() + 1 > 50 {
-      break;
-    }
-
-    branch_name_parts.insert(
-      branch_name_parts.len() - 1,
-      story_name_words.remove(0).to_string(),
-    );
-  }
-
-  branch_name_parts.join("-")
 }
