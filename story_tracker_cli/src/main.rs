@@ -2,7 +2,7 @@ use std::{env, error};
 
 use pivotal_tracker::{
   client::{Client, ClientNewOptions},
-  story::{GetStoryOptions, StoryID},
+  story::{GetStoryOptions, Story, StoryID},
 };
 use slug::slugify;
 
@@ -17,6 +17,13 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
       id: StoryID(181978572),
     })
     .await?;
+
+  println!("{}", generate_branch_name(&story));
+
+  Ok(())
+}
+
+fn generate_branch_name(story: &Story) -> String {
   let story_name_slug = slugify(story.name.trim());
   let mut story_name_words = story_name_slug.split("-").collect::<Vec<&str>>();
   let mut branch_name_parts = vec![
@@ -48,7 +55,5 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     );
   }
 
-  println!("{}", branch_name_parts.join("-"));
-
-  Ok(())
+  branch_name_parts.join("-")
 }

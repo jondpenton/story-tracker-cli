@@ -163,7 +163,7 @@ pub enum StoryState {
   Unstarted,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Copy, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum StoryType {
   Bug,
