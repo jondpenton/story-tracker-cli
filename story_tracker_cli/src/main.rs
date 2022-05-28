@@ -13,6 +13,7 @@ struct CLI {
 
 #[derive(Subcommand, Debug)]
 enum Command {
+  #[clap(alias = "gen")]
   Generate { story_id: String },
 }
 
