@@ -1,10 +1,20 @@
 use std::{env, error};
 
-use pivotal_tracker::{
-  client::{Client, ClientNewOptions},
-  story::{GetStoryOptions, StoryID},
-};
-use story_tracker_cli::generate::branch_name;
+use clap::{Parser, Subcommand};
+use pivotal_tracker::client::{Client, ClientNewOptions};
+use story_tracker_cli::subcommands;
+
+#[derive(Parser)]
+#[clap(author, version, about, long_about = None)]
+struct CLI {
+  #[clap(subcommand)]
+  command: Option<Command>,
+}
+
+#[derive(Subcommand, Debug)]
+enum Command {
+  Generate { story_id: String },
+}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn error::Error>> {
@@ -12,13 +22,16 @@ async fn main() -> Result<(), Box<dyn error::Error>> {
     api_key: env::var("PIVOTAL_TRACKER_API_KEY")?,
     api_version: 5,
   });
-  let story = client
-    .get_story(GetStoryOptions {
-      id: StoryID(182298326),
-    })
-    .await?;
+  let cli = CLI::parse();
 
-  println!("{:#?}", branch_name(&story));
-
-  Ok(())
+  match &cli.command {
+    Some(Command::Generate { story_id }) => {
+      subcommands::generate::run(subcommands::generate::RunOptions {
+        client: &client,
+        story_id,
+      })
+      .await
+    }
+    None => Ok(()),
+  }
 }

@@ -1,4 +1,4 @@
-use std::ops::Deref;
+use std::{num::ParseIntError, ops::Deref, str::FromStr};
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
@@ -147,6 +147,20 @@ impl Deref for StoryID {
 
   fn deref(&self) -> &Self::Target {
     &self.0
+  }
+}
+
+impl FromStr for StoryID {
+  type Err = ParseIntError;
+
+  fn from_str(s: &str) -> Result<Self, Self::Err> {
+    let normalized_str = match s {
+      s if Some('#') == s.chars().next() => &s[1..],
+      s => s,
+    };
+    let num = normalized_str.parse()?;
+
+    Ok(StoryID(num))
   }
 }
 
