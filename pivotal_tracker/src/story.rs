@@ -1,6 +1,7 @@
-use std::{fmt::Display, num::ParseIntError, ops::Deref, str::FromStr};
+use std::{num::ParseIntError, str::FromStr};
 
 use chrono::{DateTime, Utc};
+use pivotal_tracker_derive::BrandedInt;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -139,22 +140,8 @@ pub struct Story {
   pub url: url::Url,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, BrandedInt)]
 pub struct StoryID(pub u64);
-
-impl Deref for StoryID {
-  type Target = u64;
-
-  fn deref(&self) -> &Self::Target {
-    &self.0
-  }
-}
-
-impl Display for StoryID {
-  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-    write!(f, "{}", self.0)
-  }
-}
 
 impl FromStr for StoryID {
   type Err = ParseIntError;

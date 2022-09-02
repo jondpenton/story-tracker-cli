@@ -1,2 +1,2 @@
 [workspace]
-members = ["pivotal_tracker", "story_tracker_cli"]
+members = ["pivotal_tracker", "pivotal_tracker_derive", "story_tracker_cli"]
