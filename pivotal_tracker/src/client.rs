@@ -18,10 +18,13 @@ impl Client {
     }
   }
 
-  pub async fn request<T, F>(&self, func: F) -> Result<T, RequestError>
+  pub async fn request<TSuccess, TGetBuilder>(
+    &self,
+    func: TGetBuilder,
+  ) -> Result<TSuccess, RequestError>
   where
-    T: DeserializeOwned,
-    F: Fn(&reqwest::Client, String) -> reqwest::RequestBuilder,
+    TSuccess: DeserializeOwned,
+    TGetBuilder: Fn(&reqwest::Client, String) -> reqwest::RequestBuilder,
   {
     let mut headers = HeaderMap::new();
 
@@ -35,8 +38,7 @@ impl Client {
       "https://www.pivotaltracker.com/services/v{}",
       self.api_version
     );
-    let builder = func(&client, base_url);
-    let res = builder.send().await?;
+    let res = func(&client, base_url).send().await?;
 
     if res.status().as_u16() >= 400 {
       let result = res.json::<ResponseError>().await?;
@@ -44,7 +46,7 @@ impl Client {
       return Err(RequestError::Response(result));
     }
 
-    let result = res.json::<T>().await?;
+    let result = res.json::<TSuccess>().await?;
 
     Ok(result)
   }

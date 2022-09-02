@@ -1,5 +1,3 @@
-extern crate proc_macro;
-
 use pivotal_tracker_derive::BrandedInt;
 use serde::{Deserialize, Serialize};
 

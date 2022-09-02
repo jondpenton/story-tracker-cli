@@ -1,4 +1,4 @@
-use std::{env, error};
+use std::{env, error::Error};
 
 use clap::{Parser, Subcommand};
 use pivotal_tracker::client::{Client, ClientNewOptions};
@@ -18,7 +18,7 @@ enum Command {
 }
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn error::Error>> {
+async fn main() -> Result<(), Box<dyn Error>> {
   let client = Client::new(ClientNewOptions {
     api_key: env::var("PIVOTAL_TRACKER_API_KEY")?,
     api_version: 5,

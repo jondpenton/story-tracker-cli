@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::story::StoryID;
 
-// [Pivotal Tracker API](https://www.pivotaltracker.com/help/api/rest/v5#cycle_time_details_resource)
+/// [Pivotal Tracker API](https://www.pivotaltracker.com/help/api/rest/v5#cycle_time_details_resource)
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CycleTimeDetails {
   /// The total amount of time, in milliseconds, between when the story was

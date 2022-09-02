@@ -1,4 +1,4 @@
-use std::{num::ParseIntError, str::FromStr};
+use std::{fmt::Display, num::ParseIntError, str::FromStr};
 
 use chrono::{DateTime, Utc};
 use pivotal_tracker_derive::BrandedInt;
@@ -179,8 +179,10 @@ pub enum StoryType {
   Release,
 }
 
-impl From<StoryType> for String {
-  fn from(state: StoryType) -> Self {
-    format!("{:?}", state).to_lowercase()
+impl Display for StoryType {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    let story_type_str = format!("{:?}", self).to_lowercase();
+
+    write!(f, "{}", story_type_str)
   }
 }
