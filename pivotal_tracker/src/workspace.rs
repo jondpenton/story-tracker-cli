@@ -1,4 +1,4 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct WorkspaceID(u64);
+pub struct WorkspaceID(pub u64);

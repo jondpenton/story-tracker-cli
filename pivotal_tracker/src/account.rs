@@ -47,7 +47,7 @@ pub struct Account {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct AccountID(u64);
+pub struct AccountID(pub u64);
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum AccountPlan {

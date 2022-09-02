@@ -31,7 +31,7 @@ pub struct MembershipSummary {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct MembershipSummaryID(u64);
+pub struct MembershipSummaryID(pub u64);
 
 /// The relationship between the authenticated user making the request and
 /// the project.

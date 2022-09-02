@@ -1,4 +1,4 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ProjectID(u64);
+pub struct ProjectID(pub u64);
