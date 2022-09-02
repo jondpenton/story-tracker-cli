@@ -1,4 +1,5 @@
 use chrono::{DateTime, Utc};
+use pivotal_tracker_derive::BrandedInt;
 use serde::{Deserialize, Serialize};
 
 use crate::project::ProjectID;
@@ -30,7 +31,7 @@ pub struct MembershipSummary {
   pub role: MembershipSummaryRole,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, BrandedInt)]
 pub struct MembershipSummaryID(pub u64);
 
 /// The relationship between the authenticated user making the request and

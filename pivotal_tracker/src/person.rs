@@ -1,5 +1,6 @@
 extern crate proc_macro;
 
+use pivotal_tracker_derive::BrandedInt;
 use serde::{Deserialize, Serialize};
 
 /// [Pivotal Tracker API](https://www.pivotaltracker.com/help/api/rest/v5#person_resource)
@@ -19,5 +20,5 @@ pub struct Person {
   pub username: String,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, BrandedInt)]
 pub struct PersonID(pub u64);

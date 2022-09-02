@@ -1,4 +1,5 @@
 use chrono::{DateTime, Utc};
+use pivotal_tracker_derive::BrandedInt;
 use serde::{Deserialize, Serialize};
 
 use crate::project::ProjectID;
@@ -46,7 +47,7 @@ pub struct Account {
   pub updated_at: Option<DateTime<Utc>>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, BrandedInt)]
 pub struct AccountID(pub u64);
 
 #[derive(Debug, Serialize, Deserialize)]

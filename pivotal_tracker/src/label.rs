@@ -1,4 +1,5 @@
 use chrono::{DateTime, Utc};
+use pivotal_tracker_derive::BrandedInt;
 use serde::{Deserialize, Serialize};
 
 use crate::{project::ProjectID, story_counts::StoryCounts};
@@ -29,5 +30,5 @@ pub struct Label {
   pub updated_at: DateTime<Utc>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, BrandedInt)]
 pub struct LabelID(pub u64);
