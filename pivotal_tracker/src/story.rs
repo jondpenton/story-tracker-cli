@@ -1,4 +1,4 @@
-use std::{num::ParseIntError, ops::Deref, str::FromStr};
+use std::{fmt::Display, num::ParseIntError, ops::Deref, str::FromStr};
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
@@ -147,6 +147,12 @@ impl Deref for StoryID {
 
   fn deref(&self) -> &Self::Target {
     &self.0
+  }
+}
+
+impl Display for StoryID {
+  fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    write!(f, "{}", self.0)
   }
 }
 

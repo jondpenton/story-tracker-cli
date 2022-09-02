@@ -37,7 +37,7 @@ fn branch_name(story: &Story) -> String {
       String::from(story.story_type),
       story_name_words.remove(0)
     ),
-    format!("#{}", story.id.0),
+    format!("#{}", story.id),
   ];
 
   loop {
