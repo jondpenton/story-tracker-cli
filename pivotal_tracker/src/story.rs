@@ -151,7 +151,10 @@ impl FromStr for StoryID {
 
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     let normalized_str = match s {
+      // #181439777
       s if Some('#') == s.chars().next() => &s[1..],
+
+      // https://www.pivotaltracker.com/story/show/181439777
       s if s.contains(STORY_TILE_LINK_BASE) => {
         let matcher =
           Regex::new(&format!(r"{}/(?P<story_id>\d+)", STORY_TILE_LINK_BASE))
@@ -164,7 +167,19 @@ impl FromStr for StoryID {
           .unwrap()
           .as_str()
       }
-      s => s,
+
+      // 181439777 or
+      // https://www.pivotaltracker.com/n/projects/2553178/stories/181439777
+      s => {
+        let matcher = Regex::new(
+          r"https://www.pivotaltracker.com/n/projects/\d+/stories/(?P<story_id>\d+)",
+        );
+
+        match matcher.unwrap().captures(s) {
+          Some(captures) => captures.name("story_id").unwrap().as_str(),
+          None => s,
+        }
+      }
     };
     let num = normalized_str.parse()?;
 
