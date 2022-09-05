@@ -2,6 +2,7 @@ use std::{fmt::Display, num::ParseIntError, str::FromStr};
 
 use chrono::{DateTime, Utc};
 use pivotal_tracker_derive::BrandedInt;
+use regex::Regex;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -19,6 +20,8 @@ use crate::{
   story_transition::StoryTransition,
   task::TaskID,
 };
+
+const STORY_TILE_LINK_BASE: &str = "https://www.pivotaltracker.com/story/show";
 
 impl Client {
   pub async fn get_story(
@@ -149,6 +152,18 @@ impl FromStr for StoryID {
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     let normalized_str = match s {
       s if Some('#') == s.chars().next() => &s[1..],
+      s if s.contains(STORY_TILE_LINK_BASE) => {
+        let matcher =
+          Regex::new(&format!(r"{}/(?P<story_id>\d+)", STORY_TILE_LINK_BASE))
+            .unwrap();
+
+        matcher
+          .captures(s)
+          .unwrap()
+          .name("story_id")
+          .unwrap()
+          .as_str()
+      }
       s => s,
     };
     let num = normalized_str.parse()?;
