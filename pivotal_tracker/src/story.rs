@@ -173,9 +173,9 @@ impl FromStr for StoryID {
       s => {
         let matcher = Regex::new(
           r"https://www.pivotaltracker.com/n/projects/\d+/stories/(?P<story_id>\d+)",
-        );
+        ).unwrap();
 
-        match matcher.unwrap().captures(s) {
+        match matcher.captures(s) {
           Some(captures) => captures.name("story_id").unwrap().as_str(),
           None => s,
         }
