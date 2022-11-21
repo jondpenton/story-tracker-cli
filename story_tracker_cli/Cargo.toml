@@ -11,4 +11,4 @@ pivotal_tracker = { version = "*", path = "../pivotal_tracker" }
 serde = "1.0.144"
 serde_json = "1.0.85"
 slug = "0.1.4"
-tokio = { version = "1.21.0", features = ["full"] }
+tokio = { version = "1.22.0", features = ["full"] }
