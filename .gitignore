@@ -1,8 +1,15 @@
-# Environment variables
-**/.envrc
+# Devenv
+.devenv*
+devenv.local.nix
 
 # Mac
 .DS_Store
 
 # Rust output
-target/
+target
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
