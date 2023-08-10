@@ -30,7 +30,7 @@ impl Client {
   ) -> Result<Story, RequestError> {
     self
       .request::<Story, _>(|client, base_url| {
-        client.get(format!("{}/stories/{}", base_url, options.id.to_string()))
+        client.get(format!("{}/stories/{}", base_url, options.id))
       })
       .await
   }
@@ -152,7 +152,7 @@ impl FromStr for StoryID {
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     let normalized_str = match s {
       // #181439777
-      s if Some('#') == s.chars().next() => &s[1..],
+      s if s.starts_with('#') => &s[1..],
 
       // https://www.pivotaltracker.com/story/show/181439777
       s if s.contains(STORY_TILE_LINK_BASE) => {

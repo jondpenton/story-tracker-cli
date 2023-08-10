@@ -27,7 +27,7 @@ pub fn derive_branded_int(item: TokenStream) -> TokenStream {
   let input = parse_macro_input!(item as DeriveInput);
   let ident = &input.ident;
   let type_ident = get_branded_type(&input);
-  let branded_impls = get_branded_impls(&ident, type_ident);
+  let branded_impls = get_branded_impls(ident, type_ident);
 
   // Build the output, possibly using quasi-quotation
   let tokens = quote! {

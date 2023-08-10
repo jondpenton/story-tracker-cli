@@ -27,7 +27,6 @@ pub fn get_branded_type(input: &DeriveInput) -> &Ident {
     _ => None,
   }
   .unwrap();
-  let type_ident = &type_path.path.segments[0].ident;
 
-  type_ident
+  &type_path.path.segments[0].ident
 }
