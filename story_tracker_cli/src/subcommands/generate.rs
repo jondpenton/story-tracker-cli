@@ -27,7 +27,7 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 
   let branch_name = branch_name(&story);
 
-  println!("{:#?}", branch_name);
+  println!("{}", branch_name);
 
   Ok(())
 }
