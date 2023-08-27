@@ -9,6 +9,7 @@
   };
 
   packages = [
+    pkgs.cargo-watch
     pkgs.git
 
     (lib.mkIf pkgs.stdenv.isDarwin pkgs.darwin.apple_sdk.frameworks.CoreFoundation)
