@@ -14,6 +14,7 @@
 
     (lib.mkIf pkgs.stdenv.isDarwin pkgs.darwin.apple_sdk.frameworks.CoreFoundation)
     (lib.mkIf pkgs.stdenv.isDarwin pkgs.darwin.apple_sdk.frameworks.Security)
+    (lib.mkIf pkgs.stdenv.isDarwin pkgs.mktemp)
   ];
 
   pre-commit = {
