@@ -1,8 +1,7 @@
 use core::fmt;
-use std::{error::Error, fmt::Display};
-
 use reqwest::header::HeaderMap;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use std::{error::Error, fmt::Display};
 use url::ParseError;
 
 pub struct Client {
@@ -32,8 +31,7 @@ impl Client {
 
     let client = reqwest::Client::builder()
       .default_headers(headers)
-      .build()
-      .unwrap();
+      .build()?;
     let base_url = format!(
       "https://www.pivotaltracker.com/services/v{}",
       self.api_version

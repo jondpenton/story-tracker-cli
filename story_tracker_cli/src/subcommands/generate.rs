@@ -1,10 +1,9 @@
-use std::error::Error;
-
 use pivotal_tracker::{
   client::Client,
   story::{GetStoryOptions, Story, StoryID},
 };
 use slug::slugify;
+use std::error::Error;
 
 pub struct RunOptions<'a> {
   pub client: &'a Client,
@@ -13,11 +12,16 @@ pub struct RunOptions<'a> {
 
 pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
   let RunOptions { story_id, client } = options;
-  let story_id = story_id.parse::<StoryID>()?;
+  let story_id = story_id
+    .parse::<StoryID>()
+    .expect(&format!("Invalid story ID in {}", story_id));
 
   println!("Getting story...");
 
-  let story = client.get_story(GetStoryOptions { id: story_id }).await?;
+  let story = client
+    .get_story(GetStoryOptions { id: story_id })
+    .await
+    .expect("Failed to get story");
 
   println!("Generating branch name...");
 

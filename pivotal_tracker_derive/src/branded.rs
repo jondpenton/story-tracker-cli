@@ -19,14 +19,25 @@ pub fn get_branded_type(input: &DeriveInput) -> &Ident {
   let data_struct = match &input.data {
     Data::Struct(data_struct) => Some(data_struct),
     _ => None,
-  }
-  .unwrap();
-  let struct_type = &data_struct.fields.iter().next().unwrap().ty;
+  };
+  let struct_type = &data_struct
+    .expect(&format!("Failed to get data structure of {}", input.ident))
+    .fields
+    .iter()
+    .next()
+    .expect(&format!("Failed to get first field of {}", input.ident))
+    .ty;
   let type_path = match struct_type {
     Type::Path(type_path) => Some(type_path),
     _ => None,
-  }
-  .unwrap();
+  };
 
-  &type_path.path.segments[0].ident
+  &type_path
+    .expect(&format!(
+      "Expected first field type of {} to be Type::Path",
+      input.ident
+    ))
+    .path
+    .segments[0]
+    .ident
 }

@@ -1,9 +1,8 @@
-use std::{fmt::Display, num::ParseIntError, str::FromStr};
-
 use chrono::{DateTime, Utc};
 use pivotal_tracker_derive::BrandedInt;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
+use std::{fmt::Display, num::ParseIntError, str::FromStr};
 
 use crate::{
   blocker::BlockerID,
@@ -21,6 +20,7 @@ use crate::{
   task::TaskID,
 };
 
+const STORY_LINK_BASE: &str = "https://www.pivotaltracker.com/n/projects";
 const STORY_TILE_LINK_BASE: &str = "https://www.pivotaltracker.com/story/show";
 
 impl Client {
@@ -155,35 +155,59 @@ impl FromStr for StoryID {
       s if s.starts_with('#') => &s[1..],
 
       // https://www.pivotaltracker.com/story/show/181439777
-      s if s.contains(STORY_TILE_LINK_BASE) => {
+      s if s.starts_with(STORY_TILE_LINK_BASE) => {
+        let matcher_link_example =
+          format!("{}/<story-id>", STORY_TILE_LINK_BASE);
         let matcher =
-          Regex::new(&format!(r"{}/(?P<story_id>\d+)", STORY_TILE_LINK_BASE))
-            .unwrap();
+          Regex::new(&format!(r"^{}/(?P<story_id>\d+)", STORY_TILE_LINK_BASE))
+            .expect(&format!(
+              "Failed to create regex for story tile link ({})",
+              matcher_link_example
+            ));
 
         matcher
           .captures(s)
-          .unwrap()
+          .expect(&format!(
+            "Failed to match story tile link ({}) with {}",
+            matcher_link_example, s
+          ))
           .name("story_id")
-          .unwrap()
+          .expect(&format!(
+            "Failed to get story ID from story tile link ({}) with {}",
+            matcher_link_example, s
+          ))
           .as_str()
       }
 
       // 181439777 or
       // https://www.pivotaltracker.com/n/projects/2553178/stories/181439777
       s => {
-        let matcher = Regex::new(
-          r"https://www.pivotaltracker.com/n/projects/\d+/stories/(?P<story_id>\d+)",
-        ).unwrap();
+        let matcher_link_example =
+          format!("{}/<project-id>/stories/<story-id>", STORY_LINK_BASE);
+        let matcher = Regex::new(&format!(
+          r"{}/\d+/stories/(?P<story_id>\d+)",
+          STORY_LINK_BASE
+        ))
+        .expect(&format!(
+          "Failed to create regex for story link ({})",
+          matcher_link_example
+        ));
 
         match matcher.captures(s) {
-          Some(captures) => captures.name("story_id").unwrap().as_str(),
+          Some(captures) => captures
+            .name("story_id")
+            .expect(&format!(
+              "Failed to get story ID from story link ({}) with {}",
+              matcher_link_example, s
+            ))
+            .as_str(),
           None => s,
         }
       }
     };
-    let num = normalized_str.parse()?;
+    let story_id = normalized_str.parse()?;
 
-    Ok(StoryID(num))
+    Ok(StoryID(story_id))
   }
 }
 
