@@ -4,15 +4,15 @@ use std::{env, error::Error};
 use story_tracker_cli::subcommands;
 
 #[derive(Parser)]
-#[clap(author, version, about, long_about = None)]
+#[command(author, version, about, long_about = None)]
 struct CLI {
-	#[clap(subcommand)]
+	#[command(subcommand)]
 	command: Option<Command>,
 }
 
-#[derive(Subcommand, Debug)]
+#[derive(Subcommand)]
 enum Command {
-	#[clap(alias = "gen")]
+	#[command(alias = "gen")]
 	Generate { story_id: String },
 }
 
