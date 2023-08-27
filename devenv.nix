@@ -62,5 +62,5 @@
     hooks.yamllint.enable = true;
   };
 
-  scripts.lint-clippy.exec = "${pkgs.cargo}/bin/cargo clippy -- --allow clippy::upper_case_acronyms --deny warnings";
+  scripts.lint-clippy.exec = "${pkgs.cargo}/bin/cargo clippy -- --allow clippy::expect_fun_call --allow clippy::upper_case_acronyms --deny warnings";
 }
