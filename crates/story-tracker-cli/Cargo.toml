@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "3.2.20", features = ["derive"] }
-pivotal_tracker = { version = "*", path = "../pivotal_tracker" }
+pivotal-tracker = { version = "*", path = "../pivotal-tracker" }
 serde = "1.0.144"
 serde_json = "1.0.85"
 slug = "0.1.4"
