@@ -16,18 +16,18 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
     .parse::<StoryID>()
     .expect(&format!("Invalid story ID in {}", story_id));
 
-  println!("Getting story...");
+  eprintln!("Getting story...");
 
   let story = client
     .get_story(GetStoryOptions { id: story_id })
     .await
     .expect("Failed to get story");
 
-  println!("Generating branch name...");
+  eprintln!("Generating branch name...");
 
   let branch_name = branch_name(&story);
 
-  println!("{:#?}", branch_name);
+  println!("{}", branch_name);
 
   Ok(())
 }
