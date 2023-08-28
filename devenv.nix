@@ -8,14 +8,17 @@
     rust.enable = true;
   };
 
-  packages = [
-    pkgs.cargo-watch
-    pkgs.git
-
-    (lib.mkIf pkgs.stdenv.isDarwin pkgs.darwin.apple_sdk.frameworks.CoreFoundation)
-    (lib.mkIf pkgs.stdenv.isDarwin pkgs.darwin.apple_sdk.frameworks.Security)
-    (lib.mkIf pkgs.stdenv.isDarwin pkgs.mktemp)
-  ];
+  packages =
+    [
+      pkgs.alejandra
+      pkgs.cargo-watch
+      pkgs.git
+    ]
+    ++ lib.optionals pkgs.stdenv.isDarwin [
+      pkgs.darwin.apple_sdk.frameworks.CoreFoundation
+      pkgs.darwin.apple_sdk.frameworks.Security
+      pkgs.mktemp
+    ];
 
   pre-commit = {
     # The Uncompromising Nix Code Formatter.
