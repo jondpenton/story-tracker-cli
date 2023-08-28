@@ -15,9 +15,7 @@ use crate::{
 impl Client {
 	pub async fn get_me(&self) -> Result<Me, RequestError> {
 		self
-			.request::<Me, _>(|client, base_url| {
-				client.get(format!("{}/me", base_url))
-			})
+			.request::<Me, _>(|client, base_url| client.get(format!("{base_url}/me")))
 			.await
 	}
 }
