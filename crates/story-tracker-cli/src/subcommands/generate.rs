@@ -14,7 +14,7 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 	let RunOptions { story_id, client } = options;
 	let story_id = story_id
 		.parse::<StoryID>()
-		.expect(&format!("Invalid story ID in {}", story_id));
+		.expect(&format!("Invalid story ID in {story_id}"));
 
 	eprintln!("Getting story...");
 
@@ -27,7 +27,7 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 
 	let branch_name = branch_name(&story);
 
-	println!("{}", branch_name);
+	println!("{branch_name}");
 
 	Ok(())
 }

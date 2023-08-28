@@ -30,7 +30,7 @@ impl Client {
 	) -> Result<Story, RequestError> {
 		self
 			.request::<Story, _>(|client, base_url| {
-				client.get(format!("{}/stories/{}", base_url, options.id))
+				client.get(format!("{base_url}/stories/{}", options.id))
 			})
 			.await
 	}
@@ -156,25 +156,21 @@ impl FromStr for StoryID {
 
 			// https://www.pivotaltracker.com/story/show/181439777
 			s if s.starts_with(STORY_TILE_LINK_BASE) => {
-				let matcher_link_example =
-					format!("{}/<story-id>", STORY_TILE_LINK_BASE);
+				let matcher_link_example = format!("{STORY_TILE_LINK_BASE}/<story-id>");
 				let matcher =
-					Regex::new(&format!(r"^{}/(?P<story_id>\d+)", STORY_TILE_LINK_BASE))
+					Regex::new(&format!(r"^{STORY_TILE_LINK_BASE}/(?P<story_id>\d+)"))
 						.expect(&format!(
-							"Failed to create regex for story tile link ({})",
-							matcher_link_example
+							"Failed to create regex for story tile link ({matcher_link_example})"
 						));
 
 				matcher
 					.captures(s)
 					.expect(&format!(
-						"Failed to match story tile link ({}) with {}",
-						matcher_link_example, s
+						"Failed to match story tile link ({matcher_link_example}) with {s}",
 					))
 					.name("story_id")
 					.expect(&format!(
-						"Failed to get story ID from story tile link ({}) with {}",
-						matcher_link_example, s
+						"Failed to get story ID from story tile link ({matcher_link_example}) with {s}",
 					))
 					.as_str()
 			}
@@ -183,22 +179,19 @@ impl FromStr for StoryID {
 			// https://www.pivotaltracker.com/n/projects/2553178/stories/181439777
 			s => {
 				let matcher_link_example =
-					format!("{}/<project-id>/stories/<story-id>", STORY_LINK_BASE);
+					format!("{STORY_LINK_BASE}/<project-id>/stories/<story-id>");
 				let matcher = Regex::new(&format!(
-					r"{}/\d+/stories/(?P<story_id>\d+)",
-					STORY_LINK_BASE
+					r"{STORY_LINK_BASE}/\d+/stories/(?P<story_id>\d+)"
 				))
 				.expect(&format!(
-					"Failed to create regex for story link ({})",
-					matcher_link_example
+					"Failed to create regex for story link ({matcher_link_example})"
 				));
 
 				match matcher.captures(s) {
 					Some(captures) => captures
 						.name("story_id")
 						.expect(&format!(
-							"Failed to get story ID from story link ({}) with {}",
-							matcher_link_example, s
+							"Failed to get story ID from story link ({matcher_link_example}) with {s}"
 						))
 						.as_str(),
 					None => s,
@@ -235,7 +228,7 @@ pub enum StoryType {
 
 impl Display for StoryType {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-		let story_type_str = format!("{:?}", self).to_lowercase();
+		let story_type_str = format!("{self:?}").to_lowercase();
 
 		write!(f, "{}", story_type_str)
 	}
