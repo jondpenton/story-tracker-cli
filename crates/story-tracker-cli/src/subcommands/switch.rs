@@ -17,14 +17,8 @@ pub async fn run(_options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 fn get_default_branch() -> String {
 	let repo = Repository::open_from_env().unwrap();
 	let revspec = repo.revparse_single("refs/remotes/origin/HEAD").unwrap();
-
-	println!("Revspec: {:?}", revspec);
-
 	let commit = revspec.as_commit().unwrap();
 	let commit_id = commit.id();
-
-	println!("Commit ID: {}", commit_id);
-
 	let mut branches = repo.branches(Some(BranchType::Remote)).unwrap();
 	let branch_name = branches
 		.find_map(|branch_tuple| {
