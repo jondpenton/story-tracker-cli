@@ -9,6 +9,6 @@ edition = "2021"
 clap = { version = "4.4.1", features = ["derive"] }
 pivotal-tracker = { version = "*", path = "../pivotal-tracker" }
 serde = "1.0.144"
-serde_json = "1.0.85"
+serde_json = "1.0.108"
 slug = "0.1.4"
 tokio = { version = "1.21.0", features = ["full"] }
