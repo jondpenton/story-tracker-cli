@@ -10,6 +10,6 @@ pivotal-tracker-derive = { path = "../pivotal-tracker-derive" }
 regex = "1.6.0"
 reqwest = { version = "0.11", features = ["json"] }
 serde = { version = "1.0.144", features = ["derive"] }
-serde_json = "1.0.85"
+serde_json = "1.0.108"
 tokio = { version = "1.21.0", features = ["full"] }
 url = { version = "2.4.1", features = ["serde"] }
