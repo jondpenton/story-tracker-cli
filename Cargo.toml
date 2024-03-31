@@ -4,3 +4,4 @@ members = [
   "crates/pivotal-tracker-derive",
   "crates/story-tracker-cli",
 ]
+resolver = "2"
