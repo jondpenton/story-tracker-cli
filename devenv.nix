@@ -77,6 +77,9 @@
     # Incremental analysis assistant for writing in Nix.
     nil.enable = true;
 
+    # Opinionated multi-language code formatter.
+    prettier.enable = true;
+
     # Format Rust code.
     rustfmt.enable = true;
 
