@@ -4,6 +4,7 @@ use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use std::{error::Error, fmt::Display};
 use url::ParseError;
 
+#[derive(Debug)]
 pub struct Client {
 	pub api_key: String,
 	pub api_version: u8,

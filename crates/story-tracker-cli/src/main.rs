@@ -13,7 +13,12 @@ struct CLI {
 #[derive(Subcommand)]
 enum Command {
 	#[command(alias = "gen")]
-	Generate { story_id: String },
+	Generate {
+		story_id: String,
+	},
+	Switch {
+		branch_or_story_id: String,
+	},
 }
 
 #[tokio::main]
@@ -30,6 +35,13 @@ async fn main() -> Result<(), Box<dyn Error>> {
 			subcommands::generate::run(subcommands::generate::RunOptions {
 				client: &client,
 				story_id,
+			})
+			.await
+		}
+		Some(Command::Switch { branch_or_story_id }) => {
+			subcommands::switch::run(subcommands::switch::RunOptions {
+				client: &client,
+				branch_or_story_id,
 			})
 			.await
 		}
