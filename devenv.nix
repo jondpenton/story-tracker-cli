@@ -28,11 +28,39 @@
     # cargo-check.enable = true;
 
     # Lint Rust code.
-    # clippy.enable = true;
-    # settings.clippy = {
-    #   denyWarnings = true;
-    #   offline = false;
-    # };
+    clippy = {
+      enable = true;
+
+      description = "Lint Rust code.";
+
+      # The name of the hook (appears on the report table):
+      name = "clippy";
+
+      # The command to execute (mandatory):
+      package = pkgs.cargo;
+      entry = "cargo clippy -- --allow clippy::expect_fun_call --allow clippy::upper_case_acronyms --deny warnings";
+
+      # The pattern of files to run on (default: "" (all))
+      # see also https://pre-commit.com/#hooks-files
+      files = "(\\.rs|^devenv\\.nix)$";
+
+      # List of file types to run on (default: [ "file" ] (all files))
+      # see also https://pre-commit.com/#filtering-files-with-types
+      # You probably only need to specify one of `files` or `types`:
+      # types = ["file"];
+
+      # Exclude files that were matched by these patterns (default: [ ] (none)):
+      # excludes = [];
+
+      # The language of the hook - tells pre-commit
+      # how to install the hook (default: "system")
+      # see also https://pre-commit.com/#supported-languages
+      # language = "system";
+
+      # Set this to false to not pass the changed files
+      # to the command (default: true):
+      pass_filenames = false;
+    };
 
     # Check whether the current commit message follows commiting rules.
     # commitizen.enable = true;
@@ -67,6 +95,4 @@
     # Yaml linter.
     yamllint.enable = true;
   };
-
-  scripts.lint-clippy.exec = "${pkgs.cargo}/bin/cargo clippy -- --allow clippy::expect_fun_call --allow clippy::upper_case_acronyms --deny warnings";
 }
