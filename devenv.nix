@@ -25,7 +25,7 @@
     alejandra.enable = true;
 
     # Check the cargo package for errors.
-    # cargo-check.enable = true;
+    cargo-check.enable = true;
 
     # Lint Rust code.
     clippy = {
@@ -70,9 +70,6 @@
       enable = true;
       settings.edit = true;
     };
-
-    # Generate a commit message using GPT3.
-    # gptcommit.enable = true;
 
     # Spell checker and morphological analyzer.
     hunspell.enable = true;
