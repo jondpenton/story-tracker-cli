@@ -21,49 +21,53 @@
     ];
 
   pre-commit = {
-    # The Uncompromising Nix Code Formatter.
-    hooks.alejandra.enable = true;
+    hooks = {
+      # The Uncompromising Nix Code Formatter.
+      alejandra.enable = true;
 
-    # Check the cargo package for errors.
-    # hooks.cargo-check.enable = true;
+      # Check the cargo package for errors.
+      # cargo-check.enable = true;
 
-    # Lint Rust code.
-    # hooks.clippy.enable = true;
-    # settings.clippy = {
-    #   denyWarnings = true;
-    #   offline = false;
-    # };
+      # Lint Rust code.
+      # clippy.enable = true;
+      # settings.clippy = {
+      #   denyWarnings = true;
+      #   offline = false;
+      # };
 
-    # Check whether the current commit message follows commiting rules.
-    # hooks.commitizen.enable = true;
+      # Check whether the current commit message follows commiting rules.
+      # commitizen.enable = true;
 
-    # Scan Nix files for dead code (unused variable bindings).
-    hooks.deadnix.enable = true;
-    settings.deadnix.edit = true;
+      # Scan Nix files for dead code (unused variable bindings).
+      deadnix = {
+        enable = true;
+        settings.edit = true;
+      };
 
-    # Generate a commit message using GPT3.
-    # hooks.gptcommit.enable = true;
+      # Generate a commit message using GPT3.
+      # gptcommit.enable = true;
 
-    # Spell checker and morphological analyzer.
-    hooks.hunspell.enable = true;
+      # Spell checker and morphological analyzer.
+      hunspell.enable = true;
 
-    # Incremental analysis assistant for writing in Nix.
-    hooks.nil.enable = true;
+      # Incremental analysis assistant for writing in Nix.
+      nil.enable = true;
 
-    # Format Rust code.
-    hooks.rustfmt.enable = true;
+      # Format Rust code.
+      rustfmt.enable = true;
 
-    # Format shell files.
-    hooks.shellcheck.enable = true;
+      # Format shell files.
+      shellcheck.enable = true;
 
-    # Lints and suggestions for the Nix programming language.
-    hooks.statix.enable = true;
+      # Lints and suggestions for the Nix programming language.
+      statix.enable = true;
 
-    # Format TOML files with taplo fmt
-    hooks.taplo.enable = true;
+      # Format TOML files with taplo fmt
+      taplo.enable = true;
 
-    # Yaml linter.
-    hooks.yamllint.enable = true;
+      # Yaml linter.
+      yamllint.enable = true;
+    };
   };
 
   scripts.lint-clippy.exec = "${pkgs.cargo}/bin/cargo clippy -- --allow clippy::expect_fun_call --allow clippy::upper_case_acronyms --deny warnings";
