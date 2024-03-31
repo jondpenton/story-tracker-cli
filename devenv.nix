@@ -63,7 +63,7 @@
     };
 
     # Check whether the current commit message follows commiting rules.
-    # commitizen.enable = true;
+    commitizen.enable = true;
 
     # Scan Nix files for dead code (unused variable bindings).
     deadnix = {
