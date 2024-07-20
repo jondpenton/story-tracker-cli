@@ -1,7 +1,10 @@
 [package]
-name = "pivotal-tracker-derive"
-version = "0.1.0"
+description = "Library for Pivotal Tracker derive macros. Primarily contains branding macros for now."
 edition = "2021"
+license = "MIT"
+name = "pivotal-tracker-derive"
+repository = "https://github.com/jondpenton/story-tracker-cli/tree/master/crates/pivotal-tracker-derive"
+version = "1.0.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]

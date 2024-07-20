@@ -1,7 +1,10 @@
 [package]
-name = "story-tracker-cli"
-version = "0.1.0"
+description = "CLI tool for generating story branch names and switching to them. Currently only supports Pivotal Tracker."
 edition = "2021"
+license = "MIT"
+name = "story-tracker-cli"
+repository = "https://github.com/jondpenton/story-tracker-cli/tree/master/crates/story-tracker-cli"
+version = "1.0.0"
 
 [[bin]]
 name = "stb"
