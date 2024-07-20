@@ -65,8 +65,9 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 fn checkout_branch(repo: &Repository, branch_name: &str) {
 	println!("Checking out branch {}...", branch_name);
 
-	let (object, reference) =
-		repo.revparse_ext(branch_name).expect("Object not found");
+	let (object, reference) = repo
+		.revparse_ext(&format!("origin/{}", branch_name))
+		.expect("Object not found");
 
 	repo
 		.checkout_tree(&object, None)
