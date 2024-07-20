@@ -14,7 +14,7 @@ pub struct RunOptions<'a> {
 }
 
 pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
-	// println!("{}", get_default_branch());
+	println!("{}", get_default_branch());
 
 	let branch_name = {
 		let story_id = options.branch_or_story_id.parse::<StoryID>();
@@ -35,7 +35,7 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 	};
 
 	println!("{}", branch_name);
-	// println!("Running 'git fetch --all'...");
+	println!("Fetching remote branch...");
 
 	let auth = GitAuthenticator::default();
 	let repo = Repository::open_from_env()?;
@@ -46,13 +46,11 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 		.iter()
 		.for_each(|x| auth.fetch(&repo, &mut remote, &[x.unwrap()], None).unwrap());
 
-	println!(
-		"{}",
-		repo
-			.branch_upstream_name(remote.default_branch()?.as_str().unwrap(),)?
-			.as_str()
-			.unwrap()
-	);
+	let remote_has_branch = repo
+		.find_branch(&format!("origin/{}", branch_name), BranchType::Remote)
+		.is_ok();
+
+	println!("Remote has branch: {}", remote_has_branch);
 
 	Ok(())
 }
