@@ -52,7 +52,28 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 
 	println!("Remote has branch: {}", remote_has_branch);
 
+	if remote_has_branch {
+		checkout_branch(&repo, &branch_name);
+	} else {
+		println!("Creating branch...");
+		// repo.branch(&branch_name, &format!("origin/{}", branch_name))?;
+	}
+
 	Ok(())
+}
+
+fn checkout_branch(repo: &Repository, branch_name: &str) {
+	println!("Checking out branch {}...", branch_name);
+
+	let (object, reference) =
+		repo.revparse_ext(branch_name).expect("Object not found");
+
+	repo
+		.checkout_tree(&object, None)
+		.expect("Failed to checkout");
+	repo
+		.set_head(reference.unwrap().name().unwrap())
+		.expect("Unable to set head");
 }
 
 #[allow(dead_code)]
