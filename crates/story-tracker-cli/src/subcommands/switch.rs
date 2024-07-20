@@ -94,12 +94,23 @@ fn checkout_branch(repo: &Repository, branch_name: &str) {
 	let mut remote = repo.find_remote("origin").unwrap();
 
 	auth
-		.download(
+		.fetch(
 			repo,
 			&mut remote,
-			// &[&format!("refs/heads/origin/{}", branch_name)],
 			&[&format!("refs/heads/{}", branch_name)],
+			None,
 		)
+		.unwrap();
+
+	let fetch_head = repo.find_reference("FETCH_HEAD").unwrap();
+	let fetch_commit = repo.reference_to_annotated_commit(&fetch_head).unwrap();
+
+	local_branch
+		.get_mut()
+		.set_target(fetch_commit.id(), "Fast-Forward")
+		.unwrap();
+	repo
+		.checkout_head(Some(git2::build::CheckoutBuilder::default().force()))
 		.unwrap();
 }
 
