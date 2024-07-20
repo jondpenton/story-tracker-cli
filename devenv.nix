@@ -71,9 +71,6 @@
       settings.edit = true;
     };
 
-    # Spell checker and morphological analyzer.
-    hunspell.enable = true;
-
     # Incremental analysis assistant for writing in Nix.
     nil.enable = true;
 
