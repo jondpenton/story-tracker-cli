@@ -14,17 +14,17 @@ pub struct RunOptions<'a> {
 }
 
 pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
-	println!("{}", get_default_branch());
-
 	let branch_name = {
 		let story_id = options.branch_or_story_id.parse::<StoryID>();
 
 		if story_id.is_ok() {
+			let story_id = story_id?;
+
+			println!("Fetching story {}...", story_id.0);
+
 			let story = options
 				.client
-				.get_story(GetStoryOptions {
-					id: story_id.unwrap(),
-				})
+				.get_story(GetStoryOptions { id: story_id })
 				.await
 				.expect("Failed to get story");
 
@@ -34,8 +34,7 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 		}
 	};
 
-	println!("{}", branch_name);
-	println!("Fetching remote branch...");
+	println!("Fetching remote branch origin/{}...", branch_name);
 
 	let auth = GitAuthenticator::default();
 	let repo = Repository::open_from_env()?;
@@ -50,13 +49,14 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 		.find_branch(&format!("origin/{}", branch_name), BranchType::Remote)
 		.is_ok();
 
-	println!("Remote has branch: {}", remote_has_branch);
-
 	if remote_has_branch {
 		checkout_branch(&repo, &branch_name);
 	} else {
-		println!("Creating branch...");
-		// repo.branch(&branch_name, &format!("origin/{}", branch_name))?;
+		checkout_branch(&repo, "master");
+
+		println!("Creating branch {}...", branch_name);
+
+		branch_off_current_to(&repo, &branch_name);
 	}
 
 	Ok(())
@@ -93,6 +93,8 @@ fn checkout_branch(repo: &Repository, branch_name: &str) {
 	let auth = GitAuthenticator::default();
 	let mut remote = repo.find_remote("origin").unwrap();
 
+	println!("Pulling latest from {}...", branch_name);
+
 	auth
 		.fetch(
 			repo,
@@ -112,6 +114,27 @@ fn checkout_branch(repo: &Repository, branch_name: &str) {
 	repo
 		.checkout_head(Some(git2::build::CheckoutBuilder::default().force()))
 		.unwrap();
+}
+
+fn branch_off_current_to(repo: &Repository, to_branch_name: &str) {
+	let from_branch = repo.find_branch("master", BranchType::Local).unwrap();
+	let to_branch = repo
+		.branch(
+			to_branch_name,
+			&from_branch.get().peel_to_commit().unwrap(),
+			false,
+		)
+		.unwrap_or_else(|_| {
+			repo.find_branch(to_branch_name, BranchType::Local).unwrap()
+		});
+
+	repo
+		.checkout_tree(to_branch.get().peel_to_tree().unwrap().as_object(), None)
+		.expect("Failed to checkout");
+
+	repo
+		.set_head(&format!("refs/heads/{}", to_branch_name))
+		.expect("Failed to set HEAD");
 }
 
 #[allow(dead_code)]
