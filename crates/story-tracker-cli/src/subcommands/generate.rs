@@ -32,7 +32,7 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 	Ok(())
 }
 
-fn branch_name(story: &Story) -> String {
+pub fn branch_name(story: &Story) -> String {
 	let story_slug = slugify(story.name.trim());
 	let mut story_name_words = story_slug.split('-').collect::<Vec<_>>();
 	let mut branch_name_parts = vec![
