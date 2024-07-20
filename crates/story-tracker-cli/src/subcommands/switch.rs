@@ -66,7 +66,7 @@ fn checkout_branch(repo: &Repository, branch_name: &str) {
 	println!("Checking out branch {}...", branch_name);
 
 	let (object, reference) = repo
-		.revparse_ext(&format!("origin/{}", branch_name))
+		.revparse_ext(&format!("refs/heads/{}", branch_name))
 		.expect("Object not found");
 
 	repo
