@@ -65,16 +65,42 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 fn checkout_branch(repo: &Repository, branch_name: &str) {
 	println!("Checking out branch {}...", branch_name);
 
-	let (object, reference) = repo
-		.revparse_ext(&format!("refs/heads/{}", branch_name))
-		.expect("Object not found");
+	let remote_branch = repo
+		.find_branch(&format!("origin/{}", branch_name), BranchType::Remote)
+		.unwrap();
+	let mut local_branch = repo
+		.branch(
+			branch_name,
+			&remote_branch.get().peel_to_commit().unwrap(),
+			false,
+		)
+		.unwrap_or_else(|_| {
+			repo.find_branch(branch_name, BranchType::Local).unwrap()
+		});
+
+	local_branch
+		.set_upstream(Some(&format!("origin/{}", branch_name)))
+		.unwrap();
 
 	repo
-		.checkout_tree(&object, None)
+		.checkout_tree(local_branch.get().peel_to_tree().unwrap().as_object(), None)
 		.expect("Failed to checkout");
+
 	repo
-		.set_head(reference.unwrap().name().unwrap())
-		.expect("Unable to set head");
+		.set_head(&format!("refs/heads/{}", branch_name))
+		.expect("Failed to set HEAD");
+
+	let auth = GitAuthenticator::default();
+	let mut remote = repo.find_remote("origin").unwrap();
+
+	auth
+		.download(
+			repo,
+			&mut remote,
+			// &[&format!("refs/heads/origin/{}", branch_name)],
+			&[&format!("refs/heads/{}", branch_name)],
+		)
+		.unwrap();
 }
 
 #[allow(dead_code)]
