@@ -1,4 +1,5 @@
 use crate::subcommands::generate::branch_name;
+use auth_git2::GitAuthenticator;
 use git2::{BranchType, Repository};
 use pivotal_tracker::{
 	client::Client,
@@ -13,6 +14,8 @@ pub struct RunOptions<'a> {
 }
 
 pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
+	// println!("{}", get_default_branch());
+
 	let branch_name = {
 		let story_id = options.branch_or_story_id.parse::<StoryID>();
 
@@ -32,6 +35,24 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 	};
 
 	println!("{}", branch_name);
+	// println!("Running 'git fetch --all'...");
+
+	let auth = GitAuthenticator::default();
+	let repo = Repository::open_from_env()?;
+	let mut remote = repo.find_remote("origin")?;
+
+	remote
+		.fetch_refspecs()?
+		.iter()
+		.for_each(|x| auth.fetch(&repo, &mut remote, &[x.unwrap()], None).unwrap());
+
+	println!(
+		"{}",
+		repo
+			.branch_upstream_name(remote.default_branch()?.as_str().unwrap(),)?
+			.as_str()
+			.unwrap()
+	);
 
 	Ok(())
 }
