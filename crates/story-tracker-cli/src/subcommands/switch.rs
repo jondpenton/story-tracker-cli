@@ -52,11 +52,12 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 	if remote_has_branch {
 		checkout_branch(&repo, &branch_name);
 	} else {
-		checkout_branch(&repo, "master");
+		let default_branch = get_default_branch();
+		checkout_branch(&repo, &default_branch);
 
 		println!("Creating branch {}...", branch_name);
 
-		branch_off_current_to(&repo, &branch_name);
+		branch_off_of(&repo, &branch_name, &default_branch);
 	}
 
 	Ok(())
@@ -116,8 +117,14 @@ fn checkout_branch(repo: &Repository, branch_name: &str) {
 		.unwrap();
 }
 
-fn branch_off_current_to(repo: &Repository, to_branch_name: &str) {
-	let from_branch = repo.find_branch("master", BranchType::Local).unwrap();
+fn branch_off_of(
+	repo: &Repository,
+	to_branch_name: &str,
+	from_branch_name: &str,
+) {
+	let from_branch = repo
+		.find_branch(from_branch_name, BranchType::Local)
+		.unwrap();
 	let to_branch = repo
 		.branch(
 			to_branch_name,
@@ -137,14 +144,14 @@ fn branch_off_current_to(repo: &Repository, to_branch_name: &str) {
 		.expect("Failed to set HEAD");
 }
 
-#[allow(dead_code)]
 fn get_default_branch() -> String {
 	let repo = Repository::open_from_env().unwrap();
-	let revspec = repo.revparse_single("refs/remotes/origin/HEAD").unwrap();
-	let commit = revspec.as_commit().unwrap();
-	let commit_id = commit.id();
+	let origin_revspec =
+		repo.revparse_single("refs/remotes/origin/HEAD").unwrap();
+	let origin_commit = origin_revspec.as_commit().unwrap();
+	let origin_commit_id = origin_commit.id();
 	let mut branches = repo.branches(Some(BranchType::Remote)).unwrap();
-	let branch_name = branches
+	let origin_branch_name = branches
 		.find_map(|branch_tuple| {
 			let (branch, _) = branch_tuple.unwrap();
 			let branch_name = branch.name().unwrap().unwrap().to_string();
@@ -155,7 +162,7 @@ fn get_default_branch() -> String {
 
 			let branch_commit = branch.get().peel_to_commit().unwrap();
 
-			if branch_commit.id() != commit_id {
+			if branch_commit.id() != origin_commit_id {
 				return None;
 			}
 
@@ -163,5 +170,5 @@ fn get_default_branch() -> String {
 		})
 		.unwrap();
 
-	branch_name.to_string()
+	origin_branch_name.replace("origin/", "")
 }
