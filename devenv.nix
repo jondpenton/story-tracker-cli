@@ -3,6 +3,8 @@
   pkgs,
   ...
 }: {
+  enterTest = "cargo test";
+
   languages = {
     nix.enable = true;
     rust.enable = true;
@@ -91,5 +93,6 @@
 
     # Yaml linter.
     yamllint.enable = true;
+    yamllint.settings.configData = "{ rules: { comments: { min-spaces-from-content: 1 } } }";
   };
 }
