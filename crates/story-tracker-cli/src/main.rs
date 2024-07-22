@@ -48,3 +48,136 @@ async fn main() -> Result<(), Box<dyn Error>> {
 		None => Ok(()),
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use assert_cmd::Command;
+	use pivotal_tracker::story::StoryID;
+
+	const BRANCH_NAME: &str = "feature/create-config-subcommand-#185916371";
+	const STORY_ID: StoryID = StoryID(185916371);
+	const STORY_PAGE_LINK: &str =
+		"https://www.pivotaltracker.com/n/projects/2673618/stories/185916371";
+	const STORY_TILE_LINK: &str =
+		"https://www.pivotaltracker.com/story/show/185916371";
+
+	#[test]
+	fn test_generate_pound_story_id() {
+		let mut cmd = Command::cargo_bin("stb").unwrap();
+		let assert = cmd
+			.arg("generate")
+			.arg(format!("#{}", STORY_ID))
+			.env("exit", "0")
+			.assert();
+
+		assert
+			.success()
+			.code(0)
+			.stdout(format!("{}\n", BRANCH_NAME));
+	}
+
+	#[test]
+	fn test_generate_story_id() {
+		let mut cmd = Command::cargo_bin("stb").unwrap();
+		let assert = cmd
+			.arg("generate")
+			.arg(STORY_ID.to_string())
+			.env("exit", "0")
+			.assert();
+
+		assert
+			.success()
+			.code(0)
+			.stdout(format!("{}\n", BRANCH_NAME));
+	}
+
+	#[test]
+	fn test_generate_story_page_link() {
+		let mut cmd = Command::cargo_bin("stb").unwrap();
+		let assert = cmd
+			.arg("generate")
+			.arg(STORY_PAGE_LINK)
+			.env("exit", "0")
+			.assert();
+
+		assert
+			.success()
+			.code(0)
+			.stdout(format!("{}\n", BRANCH_NAME));
+	}
+
+	#[test]
+	fn test_generate_story_tile_link() {
+		let mut cmd = Command::cargo_bin("stb").unwrap();
+		let assert = cmd
+			.arg("generate")
+			.arg(STORY_TILE_LINK)
+			.env("exit", "0")
+			.assert();
+
+		assert
+			.success()
+			.code(0)
+			.stdout(format!("{}\n", BRANCH_NAME));
+	}
+
+	#[test]
+	fn test_gen_pound_story_id() {
+		let mut cmd = Command::cargo_bin("stb").unwrap();
+		let assert = cmd
+			.arg("gen")
+			.arg(format!("#{}", STORY_ID))
+			.env("exit", "0")
+			.assert();
+
+		assert
+			.success()
+			.code(0)
+			.stdout(format!("{}\n", BRANCH_NAME));
+	}
+
+	#[test]
+	fn test_gen_story_id() {
+		let mut cmd = Command::cargo_bin("stb").unwrap();
+		let assert = cmd
+			.arg("gen")
+			.arg(STORY_ID.to_string())
+			.env("exit", "0")
+			.assert();
+
+		assert
+			.success()
+			.code(0)
+			.stdout(format!("{}\n", BRANCH_NAME));
+	}
+
+	#[test]
+	fn test_gen_story_page_link() {
+		let mut cmd = Command::cargo_bin("stb").unwrap();
+		let assert = cmd
+			.arg("gen")
+			.arg(STORY_PAGE_LINK)
+			.env("exit", "0")
+			.assert();
+
+		assert
+			.success()
+			.code(0)
+			.stdout(format!("{}\n", BRANCH_NAME));
+	}
+
+	#[test]
+	fn test_gen_story_tile_link() {
+		let mut cmd = Command::cargo_bin("stb").unwrap();
+		let assert = cmd
+			.arg("gen")
+			.arg(STORY_TILE_LINK)
+			.env("exit", "0")
+			.assert();
+
+		assert
+			.success()
+			.code(0)
+			.stdout(format!("{}\n", BRANCH_NAME));
+	}
+}
