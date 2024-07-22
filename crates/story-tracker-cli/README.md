@@ -33,7 +33,7 @@ stb gen https://www.pivotaltracker.com/story/show/12345678
 $ stb generate https://www.pivotaltracker.com/story/show/12345678
 Getting story...
 Generating branch name...
-feature/story-name-#185916370
+feature/story-name-#12345678
 ```
 
 ### stb switch
