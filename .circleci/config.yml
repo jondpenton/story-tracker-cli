@@ -6,7 +6,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/base:current
+      - image: cimg/node:current
     steps:
       - checkout
       - nix/install
