@@ -24,9 +24,9 @@ enum Command {
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
 	let client = Client::new(ClientNewOptions {
-		api_key: env::var("PIVOTAL_TRACKER_API_KEY")
-			.expect("Environment variable PIVOTAL_TRACKER_API_KEY is required"),
 		api_version: 5,
+		token: env::var("PIVOTAL_TRACKER_TOKEN")
+			.expect("Environment variable PIVOTAL_TRACKER_TOKEN is required"),
 	});
 	let cli = CLI::parse();
 

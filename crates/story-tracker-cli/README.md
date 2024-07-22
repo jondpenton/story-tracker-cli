@@ -6,7 +6,7 @@ CLI tool for generating story branch names and switching to them. Currently only
 
 ### Pivotal Tracker
 
-You will need to grab the API token from [your profile](https://www.pivotaltracker.com/profile) and set it to the environment variable `PIVOTAL_TRACKER_API_KEY`.
+You will need to grab the API token from [your profile](https://www.pivotaltracker.com/profile) and set it to the environment variable `PIVOTAL_TRACKER_TOKEN`.
 
 ## Commands
 
@@ -66,6 +66,6 @@ $ stb gen https://www.pivotaltracker.com/story/show/12345678 | pbcopy
 
 ### Environment Variables
 
-#### `PIVOTAL_TRACKER_API_TOKEN`
+#### `PIVOTAL_TRACKER_TOKEN`
 
 This will need to reflect the token on your profile page, as seen in the [Pivotal Tracker](#pivotal-tracker) section.

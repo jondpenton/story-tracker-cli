@@ -6,15 +6,15 @@ use url::ParseError;
 
 #[derive(Debug)]
 pub struct Client {
-	pub api_key: String,
 	pub api_version: u8,
+	pub token: String,
 }
 
 impl Client {
 	pub fn new(options: ClientNewOptions) -> Self {
 		Client {
-			api_key: options.api_key,
 			api_version: options.api_version,
+			token: options.token,
 		}
 	}
 
@@ -28,7 +28,7 @@ impl Client {
 	{
 		let mut headers = HeaderMap::new();
 
-		headers.append("X-TrackerToken", self.api_key.parse().unwrap());
+		headers.append("X-TrackerToken", self.token.parse().unwrap());
 
 		let client = reqwest::Client::builder()
 			.default_headers(headers)
@@ -53,7 +53,7 @@ impl Client {
 
 #[derive(Debug)]
 pub struct ClientNewOptions {
-	pub api_key: String,
+	pub token: String,
 	pub api_version: u8,
 }
 
