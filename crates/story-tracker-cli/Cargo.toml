@@ -21,3 +21,6 @@ serde = "1.0.144"
 serde_json = "1.0.108"
 slug = "0.1.4"
 tokio = { version = "1.21.0", features = ["full"] }
+
+[dev-dependencies]
+assert_cmd = "2.0.14"
