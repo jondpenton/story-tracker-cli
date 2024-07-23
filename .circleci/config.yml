@@ -24,7 +24,7 @@ jobs:
           key: *devenv-cache
       - restore_cache:
           keys:
-            - &cargo-cache cargo-v1-{{ checksum "Cargo.lock" }}
+            - &cargo-cache cargo-v2-{{ checksum "Cargo.lock" }}
             - cargo-v1-
             - cargo-v
       - run: devenv shell cargo build
