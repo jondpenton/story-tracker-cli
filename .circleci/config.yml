@@ -28,12 +28,12 @@ jobs:
             - cargo-v1-
             - cargo-v
       - run: devenv shell cargo build
+      - run: devenv test
       - save_cache:
           paths:
             - ~/.cargo
             - target
           key: *cargo-cache
-      - run: devenv test
 
 workflows:
   default:
