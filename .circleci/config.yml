@@ -13,7 +13,7 @@ jobs:
       - run: sudo chown -R circleci:circleci /nix
       - nix/install-cachix
       - run: nix profile install --accept-flake-config nixpkgs#devenv
-      - run: sudo apt-get update && apt-get install -y libssl-dev
+      - run: sudo apt-get update && sudo apt-get install -y libssl-dev pkg-config
       - run: devenv test
 
 workflows:
