@@ -10,10 +10,29 @@ jobs:
     steps:
       - checkout
       - nix/install
+      - restore_cache:
+          keys:
+            - &devenv-cache devenv-v1-{{ checksum "devenv.lock" }}
+            - devenv-v1-
+            - devenv-v
       - run: sudo chown -R circleci:circleci /nix
       - nix/install-cachix
       - run: nix profile install --accept-flake-config nixpkgs#devenv
+      - save_cache:
+          paths:
+            - /nix
+          key: *devenv-cache
+      - restore_cache:
+          keys:
+            - &cargo-cache cargo-v1-{{ checksum "Cargo.lock" }}
+            - cargo-v1-
+            - cargo-v
       - run: devenv shell cargo build
+      - save_cache:
+          paths:
+            - ~/.cargo
+            - target
+          key: *cargo-cache
       - run: devenv test
 
 workflows:
