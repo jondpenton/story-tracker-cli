@@ -15,6 +15,7 @@
       pkgs.alejandra
       pkgs.cargo-watch
       pkgs.git
+      pkgs.openssl_3_0
     ]
     ++ lib.optionals pkgs.stdenv.isDarwin [
       pkgs.darwin.apple_sdk.frameworks.CoreFoundation
