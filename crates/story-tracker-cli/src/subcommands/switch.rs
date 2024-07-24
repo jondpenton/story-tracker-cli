@@ -52,12 +52,7 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 	if remote_has_branch {
 		checkout_branch(&branch_name);
 	} else {
-		let default_branch = get_default_branch();
-		checkout_branch(&default_branch);
-
-		println!("Creating branch {}...", branch_name);
-
-		branch_off_of(&branch_name, &default_branch);
+		branch_off_of(&get_default_branch(), &branch_name);
 	}
 
 	Ok(())
@@ -76,7 +71,11 @@ fn checkout_branch(branch_name: &str) {
 	Command::new("git").args(["pull"]).output().unwrap();
 }
 
-fn branch_off_of(to_branch_name: &str, _from_branch_name: &str) {
+fn branch_off_of(from_branch_name: &str, to_branch_name: &str) {
+	checkout_branch(from_branch_name);
+
+	println!("Creating branch {}...", to_branch_name);
+
 	Command::new("git")
 		.args(["checkout", "-b", to_branch_name])
 		.output()
