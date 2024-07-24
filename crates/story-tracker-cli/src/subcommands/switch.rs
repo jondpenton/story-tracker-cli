@@ -5,7 +5,7 @@ use pivotal_tracker::{
 	client::Client,
 	story::{GetStoryOptions, StoryID},
 };
-use std::error::Error;
+use std::{error::Error, process::Command};
 
 #[derive(Debug)]
 pub struct RunOptions<'a> {
@@ -50,98 +50,37 @@ pub async fn run(options: RunOptions<'_>) -> Result<(), Box<dyn Error>> {
 		.is_ok();
 
 	if remote_has_branch {
-		checkout_branch(&repo, &branch_name);
+		checkout_branch(&branch_name);
 	} else {
 		let default_branch = get_default_branch();
-		checkout_branch(&repo, &default_branch);
+		checkout_branch(&default_branch);
 
 		println!("Creating branch {}...", branch_name);
 
-		branch_off_of(&repo, &branch_name, &default_branch);
+		branch_off_of(&branch_name, &default_branch);
 	}
 
 	Ok(())
 }
 
-fn checkout_branch(repo: &Repository, branch_name: &str) {
+fn checkout_branch(branch_name: &str) {
 	println!("Checking out branch {}...", branch_name);
 
-	let remote_branch = repo
-		.find_branch(&format!("origin/{}", branch_name), BranchType::Remote)
+	Command::new("git")
+		.args(["checkout", branch_name])
+		.output()
 		.unwrap();
-	let mut local_branch = repo
-		.branch(
-			branch_name,
-			&remote_branch.get().peel_to_commit().unwrap(),
-			false,
-		)
-		.unwrap_or_else(|_| {
-			repo.find_branch(branch_name, BranchType::Local).unwrap()
-		});
-
-	local_branch
-		.set_upstream(Some(&format!("origin/{}", branch_name)))
-		.unwrap();
-
-	repo
-		.checkout_tree(local_branch.get().peel_to_tree().unwrap().as_object(), None)
-		.expect("Failed to checkout");
-
-	repo
-		.set_head(&format!("refs/heads/{}", branch_name))
-		.expect("Failed to set HEAD");
-
-	let auth = GitAuthenticator::default();
-	let mut remote = repo.find_remote("origin").unwrap();
 
 	println!("Pulling latest from {}...", branch_name);
 
-	auth
-		.fetch(
-			repo,
-			&mut remote,
-			&[&format!("refs/heads/{}", branch_name)],
-			None,
-		)
-		.unwrap();
-
-	let fetch_head = repo.find_reference("FETCH_HEAD").unwrap();
-	let fetch_commit = repo.reference_to_annotated_commit(&fetch_head).unwrap();
-
-	local_branch
-		.get_mut()
-		.set_target(fetch_commit.id(), "Fast-Forward")
-		.unwrap();
-	repo
-		.checkout_head(Some(git2::build::CheckoutBuilder::default().force()))
-		.unwrap();
+	Command::new("git").args(["pull"]).output().unwrap();
 }
 
-fn branch_off_of(
-	repo: &Repository,
-	to_branch_name: &str,
-	from_branch_name: &str,
-) {
-	let from_branch = repo
-		.find_branch(from_branch_name, BranchType::Local)
+fn branch_off_of(to_branch_name: &str, _from_branch_name: &str) {
+	Command::new("git")
+		.args(["checkout", "-b", to_branch_name])
+		.output()
 		.unwrap();
-	let to_branch = repo
-		.branch(
-			to_branch_name,
-			&from_branch.get().peel_to_commit().unwrap(),
-			false,
-		)
-		.unwrap_or_else(|_| {
-			repo.find_branch(to_branch_name, BranchType::Local).unwrap()
-		});
-
-	repo
-		.checkout_tree(to_branch.get().peel_to_tree().unwrap().as_object(), None)
-		.expect("Failed to checkout");
-
-	repo
-		.set_head(&format!("refs/heads/{}", to_branch_name))
-		.expect("Failed to set HEAD");
 }
 
 fn get_default_branch() -> String {
