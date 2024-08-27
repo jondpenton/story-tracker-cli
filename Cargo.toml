@@ -5,3 +5,6 @@ members = [
   "crates/story-tracker-cli",
 ]
 resolver = "2"
+
+[workspace.metadata.release]
+tag-name = "{{crate_name}}@{{version}}"
