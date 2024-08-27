@@ -13,6 +13,7 @@
   packages =
     [
       pkgs.alejandra
+      pkgs.cargo-release
       pkgs.cargo-watch
       pkgs.git
       pkgs.openssl_3
