@@ -98,4 +98,7 @@
     yamllint.enable = true;
     yamllint.settings.configData = "{ rules: { comments: { min-spaces-from-content: 1 } } }";
   };
+
+  # devenv shell -- release <major/minor/patch> [--execute]
+  scripts.release.exec = "cargo release $1";
 }
