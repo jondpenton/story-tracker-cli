@@ -959,7 +959,7 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
 name = "pivotal-tracker"
-version = "2.0.6"
+version = "2.0.7"
 dependencies = [
  "chrono",
  "pivotal-tracker-derive",
@@ -1336,7 +1336,7 @@ checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
 
 [[package]]
 name = "story-tracker-cli"
-version = "2.0.6"
+version = "2.0.7"
 dependencies = [
  "assert_cmd",
  "auth-git2",
