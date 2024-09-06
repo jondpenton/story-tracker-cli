@@ -9,7 +9,7 @@ version = "2.0.6"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 chrono = { version = "0.4.38", features = ["serde"] }
-pivotal-tracker-derive = { version = "1.0.4", path = "../pivotal-tracker-derive" }
+pivotal-tracker-derive = { version = "1.0.5", path = "../pivotal-tracker-derive" }
 regex = "1.10.6"
 reqwest = { version = "0.12", features = ["json"] }
 serde = { version = "1.0.209", features = ["derive"] }
