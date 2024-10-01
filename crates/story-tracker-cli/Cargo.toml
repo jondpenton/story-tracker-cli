@@ -13,7 +13,7 @@ path = "src/main.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-auth-git2 = "0.5.4"
+auth-git2 = "0.5.5"
 clap = { version = "4.5.18", features = ["derive"] }
 git2 = "0.19.0"
 pivotal-tracker = { version = "2.0.8", path = "../pivotal-tracker" }
