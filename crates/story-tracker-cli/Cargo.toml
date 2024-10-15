@@ -14,7 +14,7 @@ path = "src/main.rs"
 
 [dependencies]
 auth-git2 = "0.5.5"
-clap = { version = "4.5.18", features = ["derive"] }
+clap = { version = "4.5.20", features = ["derive"] }
 git2 = "0.19.0"
 pivotal-tracker = { version = "2.0.9", path = "../pivotal-tracker" }
 serde = "1.0.210"
