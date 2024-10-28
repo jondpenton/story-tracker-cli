@@ -4,7 +4,7 @@ edition = "2021"
 license = "MIT"
 name = "pivotal-tracker"
 repository = "https://github.com/jondpenton/story-tracker-cli/tree/master/crates/pivotal-tracker"
-version = "2.0.9"
+version = "2.0.10"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
