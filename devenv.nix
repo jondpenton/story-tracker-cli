@@ -99,6 +99,8 @@
     yamllint.settings.configData = "{ rules: { comments: { min-spaces-from-content: 1 } } }";
   };
 
+  # release <major/minor/patch>
+  # release [--exclude <package> ...] <major/minor/patch>
   # release [--exclude <package> ...] [--execute --no-confirm] <major/minor/patch>
   scripts.release.exec = "cargo release $@";
 }
