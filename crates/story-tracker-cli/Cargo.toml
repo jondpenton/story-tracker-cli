@@ -17,7 +17,7 @@ auth-git2 = "0.5.5"
 clap = { version = "4.5.23", features = ["derive"] }
 git2 = "0.19.0"
 pivotal-tracker = { version = "2.0.11", path = "../pivotal-tracker" }
-serde = "1.0.214"
+serde = "1.0.215"
 serde_json = "1.0.133"
 slug = "0.1.6"
 tokio = { version = "1.33.0", features = ["full"] }
