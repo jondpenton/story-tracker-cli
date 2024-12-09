@@ -4,7 +4,7 @@ edition = "2021"
 license = "MIT"
 name = "story-tracker-cli"
 repository = "https://github.com/jondpenton/story-tracker-cli/tree/master/crates/story-tracker-cli"
-version = "2.0.14"
+version = "2.0.15"
 
 [[bin]]
 name = "stb"
