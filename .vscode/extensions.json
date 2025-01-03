@@ -1,0 +1,21 @@
+{
+	"recommendations": [
+		"1yib.rust-bundle",
+		"aaron-bond.better-comments",
+		"bbenoist.nix",
+		"christian-kohler.path-intellisense",
+		"dustypomerleau.rust-syntax",
+		"eamodio.gitlens",
+		"editorconfig.editorconfig",
+		"foxundermoon.shell-format",
+		"github.vscode-github-actions",
+		"kamadorueda.alejandra",
+		"mkhl.direnv",
+		"redhat.vscode-yaml",
+		"rust-lang.rust-analyzer",
+		"shardulm94.trailing-spaces",
+		"tamasfe.even-better-toml",
+		"vivaxy.vscode-conventional-commits",
+		"wmaurer.change-case"
+	]
+}
