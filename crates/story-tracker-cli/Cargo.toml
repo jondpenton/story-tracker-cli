@@ -18,7 +18,7 @@ clap = { version = "4.5.23", features = ["derive"] }
 git2 = "0.20.0"
 pivotal-tracker = { version = "2.0.13", path = "../pivotal-tracker" }
 serde = "1.0.217"
-serde_json = "1.0.134"
+serde_json = "1.0.135"
 slug = "0.1.6"
 tokio = { version = "1.33.0", features = ["full"] }
 
