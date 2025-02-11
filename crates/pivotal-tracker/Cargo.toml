@@ -4,12 +4,12 @@ edition = "2021"
 license = "MIT"
 name = "pivotal-tracker"
 repository = "https://github.com/jondpenton/story-tracker-cli/tree/master/crates/pivotal-tracker"
-version = "2.0.13"
+version = "2.0.14"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 chrono = { version = "0.4.39", features = ["serde"] }
-pivotal-tracker-derive = { version = "1.0.9", path = "../pivotal-tracker-derive" }
+pivotal-tracker-derive = { version = "1.0.10", path = "../pivotal-tracker-derive" }
 regex = "1.11.1"
 reqwest = { version = "0.12", features = ["json"] }
 serde = { version = "1.0.217", features = ["derive"] }
